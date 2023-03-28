@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js'
+import { Component, createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 import { useForm } from '../lib/useForm'
@@ -9,7 +9,7 @@ type Props = {
 
 const InvalidInputMessage = (props: Props) => {
     return (
-        <div class='invisible -mt-5 mb-1 text-sm text-pink-600 text-opacity-90 transition-all peer-invalid:visible'>
+        <div class='invisible -mt-5 -mb-1 text-sm text-pink-600 text-opacity-90 transition-all peer-invalid:!visible'>
             {props.message}
         </div>
     )
@@ -17,23 +17,22 @@ const InvalidInputMessage = (props: Props) => {
 
 const App: Component = () => {
 
-    const { validate, formSubmit, errors } = useForm({ errorClass: '' })
+    const { validate, formSubmit, errors } = useForm({ errorClass: 'invalid:bg-pink-500' })
     const [inputs, setInputs] = createStore({ email: '', password: '' })
+    const [showPwd, setShowPwd] = createSignal(false)
 
     const submit = (form: HTMLFormElement) => {
-        form.submit()
-        console.log('submit')
-        console.log(form)
+        //form.submit()
     }
     
-    function validateEmail() {
-        console.log('validate email')
-        return 'valid email'
+    const validateEmail = async() => {
+        // custom validation logic
+        return '' 
     }
 
-    function validatePassword() {
-        console.log('validate password')
-        return 'valid password'
+    const validatePassword = async() => {
+        // custom validation logic
+        return ''
     }
 
     return (
@@ -42,70 +41,55 @@ const App: Component = () => {
                 <h1 class='mb-4 text-center text-xl'>Jump Back in!</h1>
                 <form 
                     use:formSubmit={submit}
-                    autocomplete='off' class='flex flex-col'>
+                    class='flex flex-col'>
                     <label for='email' class='flex flex-col gap-1'>
                         Email
                         <input
+                            use:validate={validateEmail} 
                             id='email'
                             type='email'
                             name='email'
-                            //ref={emailRef}
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                            class='peer mb-4 h-10 w-full rounded p-2 transition-colors placeholder-shown:!bg-white invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
+                            class='peer mb-5 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
                             placeholder='You@example.com'
-                            //value={email}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 let target = e.target as HTMLInputElement
-                                console.log(target.value)
                                 setInputs('email', target.value)
-                            }}
-                            onBlur={(e) => {
-                                console.log(e)
-                                //e.target.value && setFinishedTypingEmail(true)
-                                //validateEmail(e.target.value)
                             }}
                         />
                         {errors.email && (
-                            <InvalidInputMessage message={'please'} />
+                            <InvalidInputMessage message={errors.email} />
                         )}
                     </label>
 
                     <label for='password' class='flex flex-col gap-1'>
                         Password
                         <input
-                            use:validate={validateEmail}
+                            use:validate={validatePassword} 
                             id='password'
-                            //type={showPwd ? 'text' : 'password'}
-                            //ref={pwdRef}
+                            name='password'
+                            type={showPwd() ? 'text' : 'password'}
                             required
-                            pattern='.{6,}'
-                            class='peer h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
+                            minlength={6}
+                            class='peer mb-5 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
                             placeholder='Your password'
-                            //value={pwd}
-                            onChange={(e) => {
-                                console.log(e)
-                                // handlePassword(e.target.value)
-                            }}
-                            onBlur={(e) => {
-                                console.log(e)
-                                //e.target.value &&
-                                //setFinishedTypingPassword(true)
-                                //validateEmail(e.target.value)
+                            onInput={(e) => {
+                                let target = e.target as HTMLInputElement
+                                setInputs('password', target.value)
                             }}
                         />
-                        <div class='invisible -mt-1 mb-1 text-sm text-pink-600 text-opacity-90 transition-all peer-invalid:visible'>
-                            Your password is at least 6 characters
-                        </div>
+                        {errors.password && (
+                            <InvalidInputMessage message={errors.password} />
+                        )}
                     </label>
 
                     <label>
                         <input
-                            use:validate={validatePassword}
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
                             id='show-pwd'
-                            //onChange={handleShowPwd}
+                            onChange={() => {setShowPwd(!showPwd())}}
                         />
                         Show password
                     </label>
@@ -119,11 +103,8 @@ const App: Component = () => {
                         Remember me
                     </label>
                     <button
-                        class='h-10 rounded border bg-gray-600 p-2 text-gray-50 invalid:border-pink-500 hover:bg-gray-800 active:bg-gray-900'
-                        onClick={(e) => {
-                            //handleSubmit(e)
-                        }}
-                    >
+                        type='submit'
+                        class='h-10 rounded border bg-gray-600 p-2 text-gray-50 invalid:border-pink-500 hover:bg-gray-800 active:bg-gray-900'>
                         Log in
                     </button>
                 </form>

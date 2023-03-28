@@ -1,24 +1,45 @@
 import { createStore, SetStoreFunction } from 'solid-js/store'
 
-function checkValid(
-    {
-        element,
-        validators = []
-    }: { element: HTMLInputElement; validators: Function[] },
+type LogInInput = {
+    element: HTMLInputElement,
+    validator: Function
+}
+
+type Inputs = {
+    [key: string]: LogInInput
+}
+
+type Errors = {
+    [key: string]: string
+}
+
+function checkValid({ element, validator }: LogInInput,
     setErrors: SetStoreFunction<Errors>,
     errorClass: string
 ) {
     return async () => {
         element.setCustomValidity('')
         element.checkValidity()
-        let message = element.validationMessage
+
+        let message
+
+        if (element.validity.valueMissing) {
+            let elName = element.name[0].toUpperCase() + element.name.slice(1)
+            message = `${elName} is required!`
+        }
+
+        else if (element.validity.typeMismatch || (element.name === 'email' && element.validity.patternMismatch)) {
+            message = `Please enter valid ${element.name}`
+        }
+        else if (element.validity.tooShort) {
+            message = `Your ${element.name} is at least ${element.minLength} characters`
+        }
+
+        else { message = element.validationMessage }
         if (!message) {
-            for (const validator of validators) {
-                const text = await validator(element)
-                if (text) {
-                    element.setCustomValidity(text)
-                    break
-                }
+            const text = await validator(element)
+            if (text) {
+                element.setCustomValidity(text)
             }
             message = element.validationMessage
         }
@@ -28,15 +49,7 @@ function checkValid(
         }
     }
 }
-type Inputs = {
-    [key: string]: {
-        element: HTMLInputElement
-        validators: Function[]
-    }
-}
-type Errors = {
-    [key: string]: string
-}
+
 //can be used with {error class} as parameter change element on error
 //but i will try to use bool and twind classes
 export function useForm({ errorClass }: { errorClass: string }) {
@@ -44,10 +57,10 @@ export function useForm({ errorClass }: { errorClass: string }) {
         //pass field as parameters?
         fields: Inputs = {}
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
-        let validators: Function[] = []
-        accessor && (validators = accessor())
-        let config: { element: HTMLInputElement; validators: Function[] }
-        fields[ref.name] = config = { element: ref, validators }
+        let validator: Function = () => { }
+        accessor && (validator = accessor())
+        let config: LogInInput
+        fields[ref.name] = config = { element: ref, validator }
         ref.onblur = checkValid(config, setErrors, errorClass)
         ref.oninput = () => {
             if (!errors[ref.name]) return
@@ -57,12 +70,9 @@ export function useForm({ errorClass }: { errorClass: string }) {
         }
     }
 
-    const formSubmit = (ref: HTMLInputElement, accessor?: Function) => {
-
-        console.log(ref)
-        console.log('form submit')
+    const formSubmit = (ref: HTMLFormElement, accessor?: Function) => {
         //is this needed here?
-        let callback = (ref: HTMLInputElement) => {}
+        let callback = (ref: HTMLFormElement) => { }
         accessor && (callback = accessor())
         ref.setAttribute('novalidate', '')
         ref.onsubmit = async (e) => {

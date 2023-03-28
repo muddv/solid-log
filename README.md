@@ -14,3 +14,4 @@ eslint + typescript rules
 -   check if `import jsx from solid` in global.d.ts affects bundle size
 -   eslint rule to group imports
 -   eslint rule to prefer function() JSX elements
+-   add light/dark mode
