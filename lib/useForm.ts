@@ -1,7 +1,7 @@
 import { createStore, SetStoreFunction } from 'solid-js/store'
 
 type LogInInput = {
-    element: HTMLInputElement,
+    element: HTMLInputElement
     validator: Function
 }
 
@@ -13,9 +13,10 @@ type Errors = {
     [key: string]: string
 }
 
-function checkValid({ element, validator }: LogInInput,
+function checkValid(
+    { element, validator }: LogInInput,
     setErrors: SetStoreFunction<Errors>,
-    errorClass: string
+    errorClass: string[]
 ) {
     return async () => {
         element.setCustomValidity('')
@@ -26,16 +27,16 @@ function checkValid({ element, validator }: LogInInput,
         if (element.validity.valueMissing) {
             let elName = element.name[0].toUpperCase() + element.name.slice(1)
             message = `${elName} is required!`
-        }
-
-        else if (element.validity.typeMismatch || (element.name === 'email' && element.validity.patternMismatch)) {
+        } else if (
+            element.validity.typeMismatch ||
+            (element.name === 'email' && element.validity.patternMismatch)
+        ) {
             message = `Please enter valid ${element.name}`
-        }
-        else if (element.validity.tooShort) {
+        } else if (element.validity.tooShort) {
             message = `Your ${element.name} is at least ${element.minLength} characters`
+        } else {
+            message = element.validationMessage
         }
-
-        else { message = element.validationMessage }
         if (!message) {
             const text = await validator(element)
             if (text) {
@@ -44,17 +45,17 @@ function checkValid({ element, validator }: LogInInput,
             message = element.validationMessage
         }
         if (message) {
-            errorClass && element.classList.toggle(errorClass, true)
+            errorClass.forEach((c) => element.classList.toggle(c, true))
             setErrors({ [element.name]: message })
         }
     }
 }
 
-export function useForm({ errorClass }: { errorClass: string }) {
+export function useForm({ errorClass }: { errorClass: string[] }) {
     const [errors, setErrors] = createStore<Errors>({}),
         fields: Inputs = {}
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
-        let validator: Function = () => { }
+        let validator: Function = () => {}
         accessor && (validator = accessor())
         let config: LogInInput
         fields[ref.name] = config = { element: ref, validator }
@@ -63,13 +64,13 @@ export function useForm({ errorClass }: { errorClass: string }) {
             //Maybe remove this?
             if (!errors[ref.name]) return
             setErrors({ [ref.name]: undefined })
-            errorClass && ref.classList.toggle(errorClass, false)
+            errorClass.forEach((c) => ref.classList.toggle(c, false))
         }
     }
 
     const formSubmit = (ref: HTMLFormElement, accessor?: Function) => {
         //is this needed here?
-        let callback = (ref: HTMLFormElement) => { }
+        let callback = (ref: HTMLFormElement) => {}
         accessor && (callback = accessor())
         ref.setAttribute('novalidate', '')
         ref.onsubmit = async (e) => {
@@ -92,5 +93,5 @@ export function useForm({ errorClass }: { errorClass: string }) {
 }
 
 export function postForm(form: HTMLFormElement) {
-    fetch(form.action, {method: 'post', body: new FormData(form)})
+    fetch(form.action, { method: 'post', body: new FormData(form) })
 }
