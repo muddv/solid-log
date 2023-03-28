@@ -50,11 +50,8 @@ function checkValid({ element, validator }: LogInInput,
     }
 }
 
-//can be used with {error class} as parameter change element on error
-//but i will try to use bool and twind classes
 export function useForm({ errorClass }: { errorClass: string }) {
     const [errors, setErrors] = createStore<Errors>({}),
-        //pass field as parameters?
         fields: Inputs = {}
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
         let validator: Function = () => { }
@@ -63,9 +60,9 @@ export function useForm({ errorClass }: { errorClass: string }) {
         fields[ref.name] = config = { element: ref, validator }
         ref.onblur = checkValid(config, setErrors, errorClass)
         ref.oninput = () => {
+            //Maybe remove this?
             if (!errors[ref.name]) return
             setErrors({ [ref.name]: undefined })
-            //use twind error class????
             errorClass && ref.classList.toggle(errorClass, false)
         }
     }
@@ -79,8 +76,8 @@ export function useForm({ errorClass }: { errorClass: string }) {
             e.preventDefault()
             let errored = false
 
-            for (const k in fields) {
-                const field = fields[k]
+            for (let i in fields) {
+                const field = fields[i]
                 await checkValid(field, setErrors, errorClass)()
                 if (!errored && field.element.validationMessage) {
                     field.element.focus()
@@ -92,4 +89,8 @@ export function useForm({ errorClass }: { errorClass: string }) {
     }
 
     return { validate, formSubmit, errors }
+}
+
+export function postForm(form: HTMLFormElement) {
+    fetch(form.action, {method: 'post', body: new FormData(form)})
 }

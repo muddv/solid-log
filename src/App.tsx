@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-import { useForm } from '../lib/useForm'
+import { useForm, postForm } from '../lib/useForm'
 
 type Props = {
     message: string
@@ -9,7 +9,7 @@ type Props = {
 
 const InvalidInputMessage = (props: Props) => {
     return (
-        <div class='invisible -mt-5 -mb-1 text-sm text-pink-600 text-opacity-90 transition-all peer-invalid:!visible'>
+        <div class='-mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all'>
             {props.message}
         </div>
     )
@@ -22,7 +22,7 @@ const App: Component = () => {
     const [showPwd, setShowPwd] = createSignal(false)
 
     const submit = (form: HTMLFormElement) => {
-        //form.submit()
+        postForm(form)
     }
     
     const validateEmail = async() => {
@@ -36,13 +36,17 @@ const App: Component = () => {
     }
 
     return (
+        //TODO fix widht for short pwd error
         <div class='flex h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900'>
             <main class='rounded border bg-gray-200 py-10 px-16 shadow-lg'>
-                <h1 class='mb-4 text-center text-xl'>Jump Back in!</h1>
+                <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form 
                     use:formSubmit={submit}
+                    method='post'
+                    action='api/login'
                     class='flex flex-col'>
-                    <label for='email' class='flex flex-col gap-1'>
+                    <label for='email'></label>
+                    <div class='flex flex-col gap-1'>
                         Email
                         <input
                             use:validate={validateEmail} 
@@ -51,7 +55,7 @@ const App: Component = () => {
                             name='email'
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                            class='peer mb-5 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
                             placeholder='You@example.com'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -61,9 +65,10 @@ const App: Component = () => {
                         {errors.email && (
                             <InvalidInputMessage message={errors.email} />
                         )}
-                    </label>
+                    </div>
 
-                    <label for='password' class='flex flex-col gap-1'>
+                    <label for='password' class='flex flex-col gap-1'></label>
+                    <div class='flex flex-col gap-1'>
                         Password
                         <input
                             use:validate={validatePassword} 
@@ -72,7 +77,7 @@ const App: Component = () => {
                             type={showPwd() ? 'text' : 'password'}
                             required
                             minlength={6}
-                            class='peer mb-5 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors invalid:bg-opacity-20 hover:shadow-md focus:shadow-md focus:outline-none'
                             placeholder='Your password'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -82,9 +87,11 @@ const App: Component = () => {
                         {errors.password && (
                             <InvalidInputMessage message={errors.password} />
                         )}
+                    </div>
+    
+                    <div>
+                    <label for='show password'> 
                     </label>
-
-                    <label>
                         <input
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
@@ -92,16 +99,17 @@ const App: Component = () => {
                             onChange={() => {setShowPwd(!showPwd())}}
                         />
                         Show password
-                    </label>
-
-                    <label>
+                    </div>
+                    
+                    <div>
+                    <label></label>
                         <input
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
                             id='remember'
                         />
                         Remember me
-                    </label>
+                    </div>
                     <button
                         type='submit'
                         class='h-10 rounded border bg-gray-600 p-2 text-gray-50 invalid:border-pink-500 hover:bg-gray-800 active:bg-gray-900'>
