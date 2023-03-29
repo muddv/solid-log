@@ -46,14 +46,18 @@ const App: Component = () => {
     const [inputs, setInputs] = createStore({ email: '', password: '' })
     const [showPwd, setShowPwd] = createSignal(false)
 
-    const submit = async(form: HTMLFormElement ) => {
-       postForm(form)
+    const submit = async (form: HTMLFormElement) => {
+        postForm(form)
     }
 
     return (
         <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
             {errors.api && <ApiError message={errors.api} />}
-            <main class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700 ${sending() && 'animate-pulse'}`}>
+            <main
+                class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700 ${
+                    sending() && 'animate-pulse'
+                }`}
+            >
                 <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form
                     use:formSubmit={submit}
@@ -61,9 +65,8 @@ const App: Component = () => {
                     action='http://localhost:8000/login'
                     class='flex flex-col'
                 >
-                    <label for='email'></label>
                     <div class='flex flex-col gap-1'>
-                        Email
+                        <label for='email'>Email</label>
                         <input
                             disabled={sending()}
                             use:validate={validateEmail}
@@ -84,9 +87,8 @@ const App: Component = () => {
                         )}
                     </div>
 
-                    <label for='password' class='flex flex-col gap-1'></label>
                     <div class='flex flex-col gap-1'>
-                        Password
+                        <label for='password'>Password</label>
                         <input
                             use:validate={validatePassword}
                             id='password'
@@ -107,7 +109,6 @@ const App: Component = () => {
                     </div>
 
                     <div>
-                        <label for='show password'></label>
                         <input
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
@@ -116,17 +117,16 @@ const App: Component = () => {
                                 setShowPwd(!showPwd())
                             }}
                         />
-                        Show password
+                        <label for='show-pwd'> Password</label>
                     </div>
 
                     <div>
-                        <label></label>
                         <input
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
                             id='remember'
                         />
-                        Remember me
+                       <label for='remember'> Remember me </label>
                     </div>
                     <button
                         type='submit'

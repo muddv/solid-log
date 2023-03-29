@@ -54,7 +54,7 @@ function checkValid(
 
 export function useForm({ errorClass }: { errorClass: string[] }) {
     const [errors, setErrors] = createStore<Errors>({}),
-    [sending, setSending] = createSignal(false),
+        [sending, setSending] = createSignal(false),
         fields: Inputs = {}
 
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
@@ -114,7 +114,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 console.log('Success')
                 console.log(data)
                 //redirect
-                setErrors({api: undefined})
+                setErrors({ api: undefined })
                 setSending(false)
                 return errors
             })

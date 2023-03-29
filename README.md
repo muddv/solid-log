@@ -17,6 +17,7 @@ eslint + typescript rules
 -   animate only button for motion-reduced
 -   reset api errors on `sending`
 -   finish disabled feedback on sending
+-   replace 'pwd' with 'password' everywhere
 
 ## DONE
 
