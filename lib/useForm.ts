@@ -1,4 +1,5 @@
 import { createStore, SetStoreFunction } from 'solid-js/store'
+import { createSignal } from 'solid-js'
 
 type LogInInput = {
     element: HTMLInputElement
@@ -53,6 +54,7 @@ function checkValid(
 
 export function useForm({ errorClass }: { errorClass: string[] }) {
     const [errors, setErrors] = createStore<Errors>({}),
+    [sending, setSending] = createSignal(false),
         fields: Inputs = {}
 
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
@@ -89,6 +91,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
     }
 
     const postForm = (ref: HTMLFormElement) => {
+        setSending(true)
         let data = new FormData(ref)
         let body: { [key: string]: FormDataEntryValue } = {}
         for (let [key, value] of data) {
@@ -101,14 +104,19 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
         })
             .then((response) => {
                 if (!response.ok) {
+                    setSending(false)
                     return Promise.reject(response)
                 }
+                setSending(false)
                 return response.json()
             })
             .then((data) => {
                 console.log('Success')
                 console.log(data)
                 //redirect
+                setErrors({api: undefined})
+                setSending(false)
+                return errors
             })
             .catch((error: Response) => {
                 if (typeof error.json === 'function') {
@@ -117,21 +125,24 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                         .then(() => {
                             let message =
                                 'User not found, check your credentials and retry.'
+                            setSending(false)
                             setErrors({ api: message })
                             return errors
                         })
                         .catch((genericError) => {
+                            setSending(false)
                             setErrors({ api: genericError })
                             return errors
                         })
                 } else {
                     let message =
                         'Network error, make sure you are connected and try again.'
+                    setSending(false)
                     setErrors({ api: message })
                     return errors
                 }
             })
     }
 
-    return { validate, formSubmit, errors, postForm }
+    return { validate, formSubmit, errors, postForm, sending }
 }

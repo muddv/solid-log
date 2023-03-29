@@ -9,7 +9,7 @@ type Props = {
 
 const InvalidInputMessage = (props: Props) => {
     return (
-        <div class='animate-[spin 3s linear infinite] -mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'>
+        <div class='-mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'>
             {props.message}
         </div>
     )
@@ -35,7 +35,7 @@ const validatePassword = async () => {
 }
 
 const App: Component = () => {
-    const { validate, formSubmit, errors, postForm } = useForm({
+    const { validate, formSubmit, errors, postForm, sending } = useForm({
         errorClass: [
             'invalid:bg-pink-500',
             'invalid:bg-opacity-20',
@@ -46,14 +46,14 @@ const App: Component = () => {
     const [inputs, setInputs] = createStore({ email: '', password: '' })
     const [showPwd, setShowPwd] = createSignal(false)
 
-    const submit = (form: HTMLFormElement) => {
-        postForm(form)
+    const submit = async(form: HTMLFormElement ) => {
+       postForm(form)
     }
 
     return (
         <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
             {errors.api && <ApiError message={errors.api} />}
-            <main class='mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700'>
+            <main class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700 ${sending() && 'animate-pulse'}`}>
                 <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form
                     use:formSubmit={submit}
@@ -65,6 +65,7 @@ const App: Component = () => {
                     <div class='flex flex-col gap-1'>
                         Email
                         <input
+                            disabled={sending()}
                             use:validate={validateEmail}
                             id='email'
                             type='email'
