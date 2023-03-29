@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-import { useForm, postForm } from '../lib/useForm'
+import { useForm } from '../lib/useForm'
 
 type Props = {
     message: string
@@ -26,7 +26,7 @@ const validatePassword = async () => {
 }
 
 const App: Component = () => {
-    const { validate, formSubmit, errors } = useForm({
+    const { validate, formSubmit, errors, postForm } = useForm({
         errorClass: [
             'invalid:bg-pink-500',
             'invalid:bg-opacity-20',
@@ -42,14 +42,13 @@ const App: Component = () => {
     }
 
     return (
-        //TODO fix widht for short pwd error
-        <div class='flex h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
+        <div class='flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
             <main class='rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700'>
                 <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form
                     use:formSubmit={submit}
                     method='post'
-                    action='api/login'
+                    action='http://localhost:8000/login'
                     class='flex flex-col'
                 >
                     <label for='email'></label>

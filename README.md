@@ -7,7 +7,8 @@ prettier + tailwind plugin
 eslint + typescript rules
 
 ## TODO
-
+-   display api errors in interface
+-   fix form widht for pwd too short error
 -   check if `import jsx from solid` in global.d.ts affects bundle size
 -   eslint rule to group imports
 -   eslint rule to prefer function() JSX elements

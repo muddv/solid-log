@@ -69,14 +69,12 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
     }
 
     const formSubmit = (ref: HTMLFormElement, accessor?: Function) => {
-        //is this needed here?
         let callback = (ref: HTMLFormElement) => {}
         accessor && (callback = accessor())
         ref.setAttribute('novalidate', '')
         ref.onsubmit = async (e) => {
             e.preventDefault()
             let errored = false
-
             for (let i in fields) {
                 const field = fields[i]
                 await checkValid(field, setErrors, errorClass)()
@@ -89,9 +87,42 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
         }
     }
 
-    return { validate, formSubmit, errors }
+    const postForm = (ref: HTMLFormElement) => {
+        let data = new FormData(ref)
+        let body: {[key: string]: FormDataEntryValue} = {}
+        for (let [key, value] of data) {
+            body[key] = value
+        }
+        fetch(ref.action, { method: 'post', headers: {"Content-Type": "application/json"},  body: JSON.stringify(body) })
+        .then((response) => {
+                if (!response.ok) {
+                    return Promise.reject(response)
+                }
+                return response.json()
+            })
+            .then((data) => {
+                console.log('Success')
+                console.log(data)
+                //redirect
+            })
+            .catch((error: Response) => {
+                if (typeof error.json === 'function') {
+                    error
+                        .json()
+                        .then((jsonError) => {
+                            console.log('Json error from API')
+                            console.log(jsonError)
+                        })
+                        .catch((genericError) => {
+                            console.log('Generic error from API')
+                            console.log(genericError.statusText)
+                        })
+                } else {
+                    console.log('Fetch error')
+                    console.log(error)
+                }})
+    }
+
+    return { validate, formSubmit, errors, postForm }
 }
 
-export function postForm(form: HTMLFormElement) {
-    fetch(form.action, { method: 'post', body: new FormData(form) })
-}
