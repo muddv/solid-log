@@ -54,6 +54,7 @@ function checkValid(
 export function useForm({ errorClass }: { errorClass: string[] }) {
     const [errors, setErrors] = createStore<Errors>({}),
         fields: Inputs = {}
+
     const validate = (ref: HTMLInputElement, accessor?: Function) => {
         let validator: Function = () => {}
         accessor && (validator = accessor())
@@ -89,12 +90,16 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
 
     const postForm = (ref: HTMLFormElement) => {
         let data = new FormData(ref)
-        let body: {[key: string]: FormDataEntryValue} = {}
+        let body: { [key: string]: FormDataEntryValue } = {}
         for (let [key, value] of data) {
             body[key] = value
         }
-        fetch(ref.action, { method: 'post', headers: {"Content-Type": "application/json"},  body: JSON.stringify(body) })
-        .then((response) => {
+        fetch(ref.action, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+            .then((response) => {
                 if (!response.ok) {
                     return Promise.reject(response)
                 }
@@ -109,20 +114,24 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 if (typeof error.json === 'function') {
                     error
                         .json()
-                        .then((jsonError) => {
-                            console.log('Json error from API')
-                            console.log(jsonError)
+                        .then(() => {
+                            let message =
+                                'User not found, check your credentials and retry.'
+                            setErrors({ api: message })
+                            return errors
                         })
                         .catch((genericError) => {
-                            console.log('Generic error from API')
-                            console.log(genericError.statusText)
+                            setErrors({ api: genericError })
+                            return errors
                         })
                 } else {
-                    console.log('Fetch error')
-                    console.log(error)
-                }})
+                    let message =
+                        'Network error, make sure you are connected and try again.'
+                    setErrors({ api: message })
+                    return errors
+                }
+            })
     }
 
     return { validate, formSubmit, errors, postForm }
 }
-

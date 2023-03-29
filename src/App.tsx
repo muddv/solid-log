@@ -9,12 +9,21 @@ type Props = {
 
 const InvalidInputMessage = (props: Props) => {
     return (
-        <div class='-mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'>
+        <div class='animate-[spin 3s linear infinite] -mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'>
             {props.message}
         </div>
     )
 }
 
+const ApiError = (props: Props) => {
+    return (
+        <div class='-mt-24 flex h-24 w-96 flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
+            <span class='mx-8'>{props.message}</span>
+        </div>
+    )
+}
+
+//TODO move validation out of component file
 const validateEmail = async () => {
     // custom validation logic
     return ''
@@ -42,8 +51,9 @@ const App: Component = () => {
     }
 
     return (
-        <div class='flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
-            <main class='rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700'>
+        <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
+            {errors.api && <ApiError message={errors.api} />}
+            <main class='mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700'>
                 <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form
                     use:formSubmit={submit}
