@@ -54,9 +54,7 @@ const App: Component = () => {
         <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
             {errors.api && <ApiError message={errors.api} />}
             <main
-                class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700 ${
-                    sending() && 'animate-pulse'
-                }`}
+                class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700`}
             >
                 <h1 class='mb-4 text-center text-xl'>Log in</h1>
                 <form
@@ -75,7 +73,7 @@ const App: Component = () => {
                             name='email'
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none disabled:bg-slate-400 dark:bg-gray-900 dark:disabled:bg-gray-800'
                             placeholder='You@example.com'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -91,12 +89,13 @@ const App: Component = () => {
                         <label for='password'>Password</label>
                         <input
                             use:validate={validatePassword}
+                            disabled={sending()}
                             id='password'
                             name='password'
                             type={showPwd() ? 'text' : 'password'}
                             required
                             minlength={6}
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none disabled:bg-slate-400 dark:bg-gray-900 dark:disabled:bg-gray-800'
                             placeholder='Your password'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -110,6 +109,7 @@ const App: Component = () => {
 
                     <div>
                         <input
+                            disabled={sending()}
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
                             id='show-pwd'
@@ -122,15 +122,19 @@ const App: Component = () => {
 
                     <div>
                         <input
+                            disabled={sending()}
                             class='mr-2 mb-4 accent-gray-600'
                             type='checkbox'
                             id='remember'
                         />
-                       <label for='remember'> Remember me </label>
+                        <label for='remember'> Remember me </label>
                     </div>
                     <button
                         type='submit'
-                        class='h-10 rounded border bg-gray-600 p-2 text-gray-50 invalid:border-pink-500 hover:bg-gray-800 active:bg-gray-900 dark:border-gray-400 dark:bg-gray-900'
+                        disabled={sending()}
+                        class={`h-10 rounded border bg-gray-600 p-2 text-gray-50 invalid:border-pink-500 hover:bg-gray-800 active:bg-gray-900 disabled:bg-gray-600 dark:border-gray-400 dark:bg-gray-900  ${
+                            sending() && 'animate-pulse'
+                        }`}
                     >
                         Log in
                     </button>
