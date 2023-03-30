@@ -66,14 +66,14 @@ const App: Component = () => {
                     <div class='flex flex-col gap-1'>
                         <label for='email'>Email</label>
                         <input
-                            disabled={sending()}
+                            readonly={sending()}
                             use:validate={validateEmail}
                             id='email'
                             type='email'
                             name='email'
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none disabled:bg-slate-400 dark:bg-gray-900 dark:disabled:bg-gray-800'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none read-only:bg-slate-400 dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -89,13 +89,13 @@ const App: Component = () => {
                         <label for='password'>Password</label>
                         <input
                             use:validate={validatePassword}
-                            disabled={sending()}
+                            readonly={sending()}
                             id='password'
                             name='password'
                             type={showPwd() ? 'text' : 'password'}
                             required
                             minlength={6}
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none disabled:bg-slate-400 dark:bg-gray-900 dark:disabled:bg-gray-800'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none read-only:bg-slate-400 dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='Your password'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
