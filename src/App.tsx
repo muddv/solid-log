@@ -2,6 +2,7 @@ import { Component, createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 import { useForm } from '../lib/useForm'
+import { useAuth } from './Auth'
 
 type Props = {
     message: string
@@ -33,6 +34,7 @@ const validatePassword = async () => {
     // custom validation logic
     return ''
 }
+
 
 const App: Component = () => {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
@@ -73,7 +75,7 @@ const App: Component = () => {
                             name='email'
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none read-only:bg-slate-400 dark:bg-gray-900 dark:read-only:bg-gray-800'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
@@ -95,7 +97,7 @@ const App: Component = () => {
                             type={showPwd() ? 'text' : 'password'}
                             required
                             minlength={6}
-                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors hover:shadow-md focus:shadow-md focus:outline-none read-only:bg-slate-400 dark:bg-gray-900 dark:read-only:bg-gray-800'
+                            class='peer mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='Your password'
                             onInput={(e) => {
                                 let target = e.target as HTMLInputElement
