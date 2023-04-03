@@ -8,9 +8,8 @@ eslint + typescript rules
 
 ## TODO
 
--   `<Welcome />` placeholder
+-   make logout button red
 -   press send with enter
--   add loader while fetch is executing: form:inactive, progress animation on top
 -   check if `import jsx from solid` in global.d.ts affects bundle size
 -   eslint rule to group imports
 -   eslint rule to prefer function() JSX elements
@@ -21,6 +20,9 @@ eslint + typescript rules
 
 ## DONE
 
+-   add loader while fetch is executing: form:inactive, progress animation on top
+-   `<Welcome />` placeholder
+-   figure out a way for `isAuthed` to persist
 -   display api errors in interface
 -   fix form widht for pwd too short error
 -   _field_ is required vs enter valid _field_ error feedback

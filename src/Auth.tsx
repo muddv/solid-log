@@ -1,18 +1,32 @@
-import { createContext, createSignal, useContext } from 'solid-js'
+import {
+    Accessor,
+    createContext,
+    createSignal,
+    JSXElement,
+    useContext
+} from 'solid-js'
 
-const AuthContext = createContext()
+const AuthContext = createContext<Auth>()
 
-export function AuthProvider(props) {
-    const [isAuthed, setIsAuthed] = createSignal(props.isAuthed || false),
-        auth = [
+type Auth = [Accessor<boolean>, { login: () => void; logout: () => void }]
+
+type Props = {
+    isAuthed?: boolean
+    children?: JSXElement
+}
+
+export function AuthProvider(props: Props) {
+    const [isAuthed, setIsAuthed] = createSignal<boolean>(
+            props.isAuthed || false
+        ),
+        auth: Auth = [
             isAuthed,
             {
                 login() {
                     setIsAuthed(true)
-                }
-            },
-            {
+                },
                 logout() {
+                    sessionStorage.removeItem('logged')
                     setIsAuthed(false)
                 }
             }
@@ -25,5 +39,5 @@ export function AuthProvider(props) {
 }
 
 export function useAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext)!
 }

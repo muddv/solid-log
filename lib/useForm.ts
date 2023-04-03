@@ -90,7 +90,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
         }
     }
 
-    const postForm = (ref: HTMLFormElement) => {
+    const postForm = (ref: HTMLFormElement, callback?: Function) => {
         setSending(true)
         let data = new FormData(ref)
         let body: { [key: string]: FormDataEntryValue } = {}
@@ -113,6 +113,9 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
             .then((data) => {
                 console.log('Success')
                 console.log(data)
+                callback && callback()
+                // or fill with obj with response data
+                sessionStorage.setItem('logged', 'true')
                 //redirect
                 setErrors({ api: undefined })
                 setSending(false)
