@@ -4,11 +4,21 @@ import { Show } from 'solid-js'
 
 import { useForm } from '../lib/useForm'
 import { useAuth } from './Auth'
-import { Welcome } from './Weclome'
 import { Navigate } from '@solidjs/router'
 
 type Props = {
     message: string
+}
+
+function validateEmail() {
+    // custom validation logic
+    return ''
+}
+
+
+function validatePassword() {
+    // custom validation logic
+    return ''
 }
 
 function InvalidInputMessage(props: Props) {
@@ -62,6 +72,7 @@ export function Login() {
                         <div class='flex flex-col gap-1'>
                             <label for='email'>Email</label>
                             <input
+                                use:validate={validateEmail}
                                 readonly={sending()}
                                 id='email'
                                 type='email'
@@ -83,6 +94,7 @@ export function Login() {
                         <div class='flex flex-col gap-1'>
                             <label for='password'>Password</label>
                             <input
+                                use:validate={validatePassword}
                                 readonly={sending()}
                                 id='password'
                                 name='password'
