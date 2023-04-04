@@ -15,7 +15,6 @@ function validateEmail() {
     return ''
 }
 
-
 function validatePassword() {
     // custom validation logic
     return ''
@@ -31,7 +30,7 @@ function InvalidInputMessage(props: Props) {
 
 function ApiError(props: Props) {
     return (
-        <div class='-mt-24 flex h-24 w-96 flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
+        <div class='-mt-24 flex h-24 w-96 w-[22rem] flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
             <span class='mx-8'>{props.message}</span>
         </div>
     )
@@ -60,7 +59,7 @@ export function Login() {
             <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
                 {errors.api && <ApiError message={errors.api} />}
                 <main
-                    class={`mt-10 w-96 rounded border bg-gray-200 py-10 px-16 shadow-lg dark:border-gray-400 dark:bg-gray-700`}
+                    class={`mt-2 w-[22rem] rounded border bg-gray-200 px-12 py-10 shadow-lg dark:border-gray-400 dark:bg-gray-700 lg:mt-8`}
                 >
                     <h1 class='mb-4 text-center text-xl'>Log in</h1>
                     <form
@@ -118,7 +117,7 @@ export function Login() {
                         <div>
                             <input
                                 disabled={sending()}
-                                class='mr-2 mb-4 accent-gray-600'
+                                class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 id='show-pwd'
                                 onChange={() => {
@@ -131,7 +130,7 @@ export function Login() {
                         <div>
                             <input
                                 disabled={sending()}
-                                class='mr-2 mb-4 accent-gray-600'
+                                class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 id='remember'
                             />

@@ -8,9 +8,16 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] add "forgot password" placeholder
+-   [ ] implement working "remember me" button
+-   [ ] try to fix gh-pages deploy
+-   [ ] try to avoid custom width for form and api error
+-   [x] fix width for mobile
+-   [x] make sure api error is visible on mobile
+-   [ ] add favicon to index.html
+-   [ ] change form action url from localhost
+-   [ ] add brach with mock backend and have option to display success state for backendless deploy
 -   [x] add favicon
--   [ ] add brach with mock backend and have option to display success state for
-    backendless deploy
 -   [x] display correct url when user tries to visit `protected` pages and is sent away
 -   [x] clean up code, use `function()` insted of `const = () => {}`
 -   [x] add loader while fetch is executing: form:inactive, progress animation on top
