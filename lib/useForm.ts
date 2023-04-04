@@ -110,11 +110,8 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 return response.json()
             })
             .then((data) => {
-                console.log('Success')
-                console.log(data)
                 callback && callback()
-                // or fill with obj with response data
-                sessionStorage.setItem('logged', 'true')
+                sessionStorage.setItem('logged', 'true') // or fill with response data
                 setErrors({ api: undefined })
                 setSending(false)
                 return errors
