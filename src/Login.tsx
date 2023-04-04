@@ -5,6 +5,7 @@ import { Show } from 'solid-js'
 import { useForm } from '../lib/useForm'
 import { useAuth } from './Auth'
 import { Welcome } from './Weclome'
+import { Navigate } from '@solidjs/router'
 
 type Props = {
     message: string
@@ -45,7 +46,7 @@ export function Login() {
     const [isAuthed, { login, logout }] = useAuth()
 
     return (
-        <Show when={!isAuthed()} fallback={<Welcome />}>
+        <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
             <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
                 {errors.api && <ApiError message={errors.api} />}
                 <main
