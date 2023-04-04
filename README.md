@@ -8,6 +8,7 @@ eslint + typescript rules
 
 ## TODO
 
+-   [x] do not cut off api mistake on mobile
 -   [ ] add "forgot password" placeholder
 -   [ ] implement working "remember me" button
 -   [ ] try to fix gh-pages deploy
