@@ -64,7 +64,6 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
         fields[ref.name] = config = { element: ref, validator }
         ref.onblur = checkValid(config, setErrors, errorClass)
         ref.oninput = () => {
-            //Maybe remove this?
             if (!errors[ref.name]) return
             setErrors({ [ref.name]: undefined })
             errorClass.forEach((c) => ref.classList.toggle(c, false))
@@ -116,7 +115,6 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 callback && callback()
                 // or fill with obj with response data
                 sessionStorage.setItem('logged', 'true')
-                //redirect
                 setErrors({ api: undefined })
                 setSending(false)
                 return errors

@@ -1,12 +1,13 @@
 import { Show } from 'solid-js'
 import { Outlet } from '@solidjs/router'
-import App from './App'
+
+import { Login } from './Login'
 import { useAuth } from './Auth'
 
-export const Protected = (props) => {
+export function Protected() {
     const [isAuthed] = useAuth()
     return (
-        <Show when={isAuthed()} fallback={<App />}>
+        <Show when={isAuthed()} fallback={<Login />}>
             <Outlet />
         </Show>
     )

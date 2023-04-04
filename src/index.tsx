@@ -1,12 +1,8 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
-import { Route, Router, Routes } from '@solidjs/router'
 
 import './index.css'
-import App from './App'
-import { AuthProvider, useAuth } from './Auth'
-import { Welcome } from './Weclome'
-import { Protected } from './Protected'
+import { App } from './App'
 
 const root = document.getElementById('root')
 
@@ -16,20 +12,4 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
     )
 }
 
-render(
-    () => (
-        <Router>
-            <AuthProvider
-                isAuthed={sessionStorage.getItem('logged') === 'true'}
-            >
-                <Routes>
-                    <Route path='' component={Protected}>
-                        <Route path='/' component={Welcome} />
-                    </Route>
-                    <Route path='/login' component={App} />
-                </Routes>
-            </AuthProvider>
-        </Router>
-    ),
-    root!
-)
+render(() => <App />, root!)
