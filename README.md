@@ -8,16 +8,13 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] add favicon
+-   [ ] add brach with mock backend and have option to display success state for
+    backendless deploy
 -   [x] display correct url when user tries to visit `protected` pages and is sent away
 -   [x] clean up code, use `function()` insted of `const = () => {}`
--   [ ] make logout button red
--   [ ] press send with enter
--   [ ] check if `import jsx from solid` in global.d.ts affects bundle size
 -   [ ] eslint rule to group imports
 -   [ ] eslint rule to prefer function() JSX elements
--   [ ] animate only button for motion-reduced
--   [ ] reset api errors on `sending`
--   [ ] finish disabled feedback on sending
 -   [ ] replace 'pwd' with 'password' everywhere
 -   [x] add loader while fetch is executing: form:inactive, progress animation on top
 -   [x] `<Welcome />` placeholder
