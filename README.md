@@ -8,6 +8,8 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] clean up styles
+-   [ ] move reusable components and function to a separate file
 -   [ ] optimize css file size
 -   [x] do not cut off api mistake on mobile
 -   [ ] add "forgot password" placeholder

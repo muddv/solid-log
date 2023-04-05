@@ -4,13 +4,14 @@ import { Show } from 'solid-js'
 
 import { useForm } from '../lib/useForm'
 import { useAuth } from './Auth'
-import { Navigate } from '@solidjs/router'
+import { Navigate, A } from '@solidjs/router'
 
 type Props = {
     message: string
+    element?: string
 }
 
-function validateEmail() {
+export function validateEmail() {
     // custom validation logic
     return ''
 }
@@ -20,17 +21,20 @@ function validatePassword() {
     return ''
 }
 
-function InvalidInputMessage(props: Props) {
+export function InvalidInputMessage(props: Props) {
     return (
-        <div class='-mt-7 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'>
+        <label
+            for={props.element}
+            class='-mt-6 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'
+        >
             {props.message}
-        </div>
+        </label>
     )
 }
 
-function ApiError(props: Props) {
+export function ApiError(props: Props) {
     return (
-        <div class='-mt-22 flex h-24 w-96 w-[22rem] flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
+        <div class='-mt-24 flex h-24 w-96 w-[22rem] flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
             <span class='mx-8'>{props.message}</span>
         </div>
     )
@@ -56,7 +60,7 @@ export function Login() {
 
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
-            <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
+            <div class='-mt-90 flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
                 {errors.api && <ApiError message={errors.api} />}
                 <main
                     class={`mt-2 w-[22rem] rounded border bg-gray-200 px-12 py-10 shadow-lg dark:border-gray-400 dark:bg-gray-700 md:mt-8`}
@@ -68,7 +72,7 @@ export function Login() {
                         action='http://localhost:8000/login'
                         class='flex flex-col'
                     >
-                        <div class='flex flex-col gap-1'>
+                        <div class='flex flex-col '>
                             <label for='email'>Email</label>
                             <input
                                 use:validate={validateEmail}
@@ -78,7 +82,7 @@ export function Login() {
                                 name='email'
                                 required
                                 pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                                class='peer mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
+                                class='mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                                 placeholder='You@example.com'
                                 onInput={(e) => {
                                     let target = e.target as HTMLInputElement
@@ -86,11 +90,14 @@ export function Login() {
                                 }}
                             />
                             {errors.email && (
-                                <InvalidInputMessage message={errors.email} />
+                                <InvalidInputMessage
+                                    message={errors.email}
+                                    element='email'
+                                />
                             )}
                         </div>
 
-                        <div class='flex flex-col gap-1'>
+                        <div class='g flex flex-col'>
                             <label for='password'>Password</label>
                             <input
                                 use:validate={validatePassword}
@@ -100,7 +107,7 @@ export function Login() {
                                 type={showPwd() ? 'text' : 'password'}
                                 required
                                 minlength={6}
-                                class='peer mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
+                                class='mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                                 placeholder='Your password'
                                 onInput={(e) => {
                                     let target = e.target as HTMLInputElement
@@ -110,6 +117,7 @@ export function Login() {
                             {errors.password && (
                                 <InvalidInputMessage
                                     message={errors.password}
+                                    element='password'
                                 />
                             )}
                         </div>
@@ -119,12 +127,12 @@ export function Login() {
                                 disabled={sending()}
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
-                                id='show-pwd'
+                                id='show-password'
                                 onChange={() => {
                                     setShowPwd(!showPwd())
                                 }}
                             />
-                            <label for='show-pwd'>Show password</label>
+                            <label for='show-password'>Show password</label>
                         </div>
 
                         <div>
@@ -147,9 +155,12 @@ export function Login() {
                         </button>
                     </form>
                     <div class='mt-2 text-left'>
-                        <a class='cursor-pointer text-center text-gray-800 hover:underline dark:text-gray-50'>
+                        <A
+                            href='/reset-password'
+                            class='cursor-pointer text-center text-gray-800 hover:underline dark:text-gray-50'
+                        >
                             Forgot your password?
-                        </a>
+                        </A>
                     </div>
                 </main>
             </div>
