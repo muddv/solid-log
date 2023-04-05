@@ -1,44 +1,12 @@
 import { createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { Show } from 'solid-js'
-
-import { useForm } from '../lib/useForm'
-import { useAuth } from './Auth'
 import { Navigate, A } from '@solidjs/router'
 
-type Props = {
-    message: string
-    element?: string
-}
-
-export function validateEmail() {
-    // custom validation logic
-    return ''
-}
-
-function validatePassword() {
-    // custom validation logic
-    return ''
-}
-
-export function InvalidInputMessage(props: Props) {
-    return (
-        <label
-            for={props.element}
-            class='-mt-6 mb-1 text-sm text-pink-600 text-opacity-90 transition-all dark:text-rose-200'
-        >
-            {props.message}
-        </label>
-    )
-}
-
-export function ApiError(props: Props) {
-    return (
-        <div class='-mt-24 flex h-24 w-96 w-[22rem] flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
-            <span class='mx-8'>{props.message}</span>
-        </div>
-    )
-}
+import { useForm } from '../lib/useForm'
+import { validateEmail, validatePassword } from '../lib/validators'
+import { useAuth } from './Auth'
+import { InputError, ApiError } from './Errors'
 
 export function Login() {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
@@ -90,7 +58,7 @@ export function Login() {
                                 }}
                             />
                             {errors.email && (
-                                <InvalidInputMessage
+                                <InputError
                                     message={errors.email}
                                     element='email'
                                 />
@@ -115,7 +83,7 @@ export function Login() {
                                 }}
                             />
                             {errors.password && (
-                                <InvalidInputMessage
+                                <InputError
                                     message={errors.password}
                                     element='password'
                                 />

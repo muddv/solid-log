@@ -12,7 +12,7 @@ eslint + typescript rules
 -   [ ] move reusable components and function to a separate file
 -   [ ] optimize css file size
 -   [x] do not cut off api mistake on mobile
--   [ ] add "forgot password" placeholder
+-   [x] add "forgot password" placeholder
 -   [ ] implement working "remember me" button
 -   [ ] try to fix gh-pages deploy
 -   [ ] try to avoid custom width for form and api error

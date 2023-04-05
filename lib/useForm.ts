@@ -14,6 +14,16 @@ type Errors = {
     [key: string]: string
 }
 
+export function validateEmail() {
+    // custom validation logic
+    return ''
+}
+
+export function validatePassword() {
+    // custom validation logic
+    return ''
+}
+
 function checkValid(
     { element, validator }: LogInInput,
     setErrors: SetStoreFunction<Errors>,

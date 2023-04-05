@@ -1,9 +1,9 @@
 import { createSignal, Show } from 'solid-js'
 
 import { useAuth } from './Auth'
-import { validateEmail } from './Login'
+import { validateEmail } from '../lib/validators'
 import { useForm } from '../lib/useForm'
-import { InvalidInputMessage, ApiError } from './Login'
+import { InputError, ApiError } from './Errors'
 import { Navigate } from '@solidjs/router'
 
 export function ForgotPassword() {
@@ -57,7 +57,7 @@ export function ForgotPassword() {
                             }}
                         />
                         {errors.email && (
-                            <InvalidInputMessage
+                            <InputError
                                 message={errors.email}
                                 element='email'
                             />
