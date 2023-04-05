@@ -105,12 +105,13 @@ export function Login() {
 
                         <div>
                             <input
-                                disabled={sending()}
+                                readonly={sending()}
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 id='remember'
+                                name='remember'
                             />
-                            <label for='remember'>Remember me </label>
+                            <label for='remember'>Remember me</label>
                         </div>
                         <button
                             type='submit'

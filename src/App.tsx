@@ -10,7 +10,10 @@ export function App() {
     return (
         <Router>
             <AuthProvider
-                isAuthed={sessionStorage.getItem('logged') === 'true'}
+                isAuthed={
+                    sessionStorage.getItem('logged') === 'true' ||
+                    localStorage.getItem('logged') === 'true'
+                }
             >
                 <Routes>
                     <Route path='' component={Protected}>

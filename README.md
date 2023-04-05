@@ -8,12 +8,14 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] type function returns
 -   [ ] clean up styles
--   [ ] move reusable components and function to a separate file
+-   [x] move reusable components and function to a separate file
 -   [ ] optimize css file size
 -   [x] do not cut off api mistake on mobile
 -   [x] add "forgot password" placeholder
--   [ ] implement working "remember me" button
+-   [x] implement working "remember me" button
+-   [ ] make styles in "forgot password" consistant with login form
 -   [ ] try to fix gh-pages deploy
 -   [ ] try to avoid custom width for form and api error
 -   [x] fix width for mobile

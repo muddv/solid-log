@@ -27,6 +27,7 @@ export function AuthProvider(props: Props) {
                 },
                 logout() {
                     sessionStorage.removeItem('logged')
+                    localStorage.removeItem('logged')
                     setIsAuthed(false)
                 }
             }

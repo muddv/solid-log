@@ -14,16 +14,6 @@ type Errors = {
     [key: string]: string
 }
 
-export function validateEmail() {
-    // custom validation logic
-    return ''
-}
-
-export function validatePassword() {
-    // custom validation logic
-    return ''
-}
-
 function checkValid(
     { element, validator }: LogInInput,
     setErrors: SetStoreFunction<Errors>,
@@ -102,6 +92,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
     const postForm = (ref: HTMLFormElement, callback?: Function) => {
         setSending(true)
         let data = new FormData(ref)
+        console.log(data)
         let body: { [key: string]: FormDataEntryValue } = {}
         for (let [key, value] of data) {
             body[key] = value
@@ -119,9 +110,13 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 setSending(false)
                 return response.json()
             })
-            .then((data) => {
+            .then((res) => {
                 callback && callback()
-                sessionStorage.setItem('logged', 'true') // or fill with response data
+                if (data.get('remember') === 'on') {
+                    localStorage.setItem('logged', 'true') // or fill with response data
+                } else {
+                    sessionStorage.setItem('logged', 'true') // or fill with response data
+                }
                 setErrors({ api: undefined })
                 setSending(false)
                 return errors
