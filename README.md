@@ -8,6 +8,7 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] optimize css file size
 -   [x] do not cut off api mistake on mobile
 -   [ ] add "forgot password" placeholder
 -   [ ] implement working "remember me" button
@@ -15,7 +16,7 @@ eslint + typescript rules
 -   [ ] try to avoid custom width for form and api error
 -   [x] fix width for mobile
 -   [x] make sure api error is visible on mobile
--   [ ] add favicon to index.html
+-   [x] add favicon to index.html
 -   [ ] change form action url from localhost
 -   [ ] add brach with mock backend and have option to display success state for backendless deploy
 -   [x] add favicon
