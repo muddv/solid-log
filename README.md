@@ -8,6 +8,7 @@ eslint + typescript rules
 
 ## TODO
 
+-   [ ] lazy load welcome and forgot password pages
 -   [ ] type function returns
 -   [ ] clean up styles
 -   [x] move reusable components and function to a separate file

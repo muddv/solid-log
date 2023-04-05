@@ -1,6 +1,6 @@
 import { useAuth } from './Auth'
 
-export function Welcome() {
+function Welcome() {
     const [isAuthed, { login, logout }] = useAuth()
     return (
         <div class='flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 '>
@@ -14,3 +14,5 @@ export function Welcome() {
         </div>
     )
 }
+
+export default Welcome

@@ -6,7 +6,7 @@ import { useForm } from '../lib/useForm'
 import { InputError, ApiError } from './Errors'
 import { Navigate } from '@solidjs/router'
 
-export function ForgotPassword() {
+function ForgotPassword() {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
         errorClass: [
             'invalid:bg-pink-500',
@@ -77,3 +77,5 @@ export function ForgotPassword() {
         </Show>
     )
 }
+
+export default ForgotPassword

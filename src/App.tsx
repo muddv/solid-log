@@ -1,10 +1,11 @@
 import { Route, Router, Routes } from '@solidjs/router'
+import { lazy } from 'solid-js'
 
 import { AuthProvider } from './Auth'
-import { ForgotPassword } from './ForgotPassword'
 import { Login } from './Login'
 import { Protected } from './Protected'
-import { Welcome } from './Weclome'
+const ForgotPassword = lazy(() => import('./ForgotPassword'))
+const Welcome = lazy(() => import('./Weclome'))
 
 export function App() {
     return (
