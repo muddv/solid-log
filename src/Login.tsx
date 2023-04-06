@@ -37,7 +37,7 @@ export function Login() {
                     <form
                         use:formSubmit={submit}
                         method='post'
-                        action='http://localhost:8000/login'
+                        action='https://example/login'
                         class='flex flex-col'
                     >
                         <div class='flex flex-col '>

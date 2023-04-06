@@ -31,7 +31,7 @@ function ForgotPassword() {
                     <form
                         use:formSubmit={submit}
                         method='post'
-                        action='http://localhost:8000/reset-password'
+                        action='https://example/reset-password'
                         class='flex flex-col'
                     >
                         <h1 class='mb-1 text-center text-xl'>

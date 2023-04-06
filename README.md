@@ -25,7 +25,7 @@ Enter email user@example.com to see success state
 -   [x] fix width for mobile
 -   [x] make sure api error is visible on mobile
 -   [x] add favicon to index.html
--   [ ] change form action url from localhost
+-   [x] change form action url from localhost
 -   [x] add option to display success state for backendless deploy
 -   [ ] add branch with mock backend which showcases "real" logic
 -   [x] add favicon
