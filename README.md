@@ -6,9 +6,12 @@ tailwind
 prettier + tailwind plugin
 eslint + typescript rules
 
+Enter email user@example.com to see success state
+
 ## TODO
 
--   [ ] lazy load welcome and forgot password pages
+-   [ ] clean up returns in `postForm()`
+-   [x] lazy load welcome and forgot password pages
 -   [ ] type function returns
 -   [ ] clean up styles
 -   [x] move reusable components and function to a separate file
@@ -23,7 +26,8 @@ eslint + typescript rules
 -   [x] make sure api error is visible on mobile
 -   [x] add favicon to index.html
 -   [ ] change form action url from localhost
--   [ ] add brach with mock backend and have option to display success state for backendless deploy
+-   [x] add option to display success state for backendless deploy
+-   [ ] add branch with mock backend which showcases "real" logic
 -   [x] add favicon
 -   [x] display correct url when user tries to visit `protected` pages and is sent away
 -   [x] clean up code, use `function()` insted of `const = () => {}`

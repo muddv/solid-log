@@ -92,59 +92,78 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
     const postForm = (ref: HTMLFormElement, callback?: Function) => {
         setSending(true)
         let data = new FormData(ref)
-        console.log(data)
         let body: { [key: string]: FormDataEntryValue } = {}
         for (let [key, value] of data) {
             body[key] = value
         }
-        fetch(ref.action, {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    setSending(false)
-                    return Promise.reject(response)
-                }
-                setSending(false)
-                return response.json()
-            })
-            .then((res) => {
-                callback && callback()
-                if (data.get('remember') === 'on') {
-                    localStorage.setItem('logged', 'true') // or fill with response data
-                } else {
-                    sessionStorage.setItem('logged', 'true') // or fill with response data
-                }
+        // placeholder logic to showcase behaviour on successful login
+        // in deploy with no backend
+        if (body.email === 'user@example.com') {
+            if (data.get('remember') === 'on') {
+                localStorage.setItem('logged', 'true')
+            } else {
+                localStorage.setItem('logged', 'true')
+            }
+            // placeholder to showcase "loading" state
+            // simulates server responce time
+            setTimeout(() => {
                 setErrors({ api: undefined })
                 setSending(false)
-                return errors
+                callback && callback()
+            }, 800)
+            return
+        }
+        // logic with backend
+        else {
+            fetch(ref.action, {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
             })
-            .catch((error: Response) => {
-                if (typeof error.json === 'function') {
-                    error
-                        .json()
-                        .then(() => {
-                            let message =
-                                'User not found, check your credentials and retry.'
-                            setSending(false)
-                            setErrors({ api: message })
-                            return errors
-                        })
-                        .catch((genericError) => {
-                            setSending(false)
-                            setErrors({ api: genericError })
-                            return errors
-                        })
-                } else {
-                    let message =
-                        'Network error, make sure you are connected and try again.'
+                .then((response) => {
+                    if (!response.ok) {
+                        setSending(false)
+                        return Promise.reject(response)
+                    }
                     setSending(false)
-                    setErrors({ api: message })
+                    return response.json()
+                })
+                .then((res) => {
+                    callback && callback()
+                    if (data.get('remember') === 'on') {
+                        localStorage.setItem('logged', 'true') // or fill with response data
+                    } else {
+                        sessionStorage.setItem('logged', 'true') // or fill with response data
+                    }
+                    setErrors({ api: undefined })
+                    setSending(false)
                     return errors
-                }
-            })
+                })
+                .catch((error: Response) => {
+                    if (typeof error.json === 'function') {
+                        error
+                            .json()
+                            .then(() => {
+                                let message =
+                                    'User not found, check your credentials and retry.'
+                                setSending(false)
+                                setErrors({ api: message })
+                                return errors
+                            })
+                            .catch((genericError) => {
+                                setSending(false)
+                                setErrors({ api: genericError })
+                                return errors
+                            })
+                    } else {
+                        let message =
+                            'Network error, make sure you are connected and try again.'
+                        setSending(false)
+                        setErrors({ api: message })
+                        return errors
+                    }
+                })
+        }
     }
 
     return { validate, formSubmit, errors, postForm, sending }
