@@ -17,9 +17,7 @@ export function App() {
                 }
             >
                 <Routes>
-                    <Route path='' component={Protected}>
-                        <Route path='/' component={Welcome} />
-                    </Route>
+                    <Route path='/' component={Welcome} />
                     <Route path='/login' component={Login} />
                     <Route path='/reset-password' component={ForgotPassword} />
                 </Routes>

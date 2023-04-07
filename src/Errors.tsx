@@ -16,7 +16,7 @@ export function InputError(props: Props) {
 
 export function ApiError(props: Props) {
     return (
-        <div class='-mt-24 flex h-24 w-96 w-[22rem] flex-none items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
+        <div class='-mt-24 flex h-24 w-96 w-[22rem] items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
             <span class='mx-8'>{props.message}</span>
         </div>
     )

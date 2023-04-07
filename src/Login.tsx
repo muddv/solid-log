@@ -28,7 +28,7 @@ export function Login() {
 
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
-            <div class='-mt-90 flex min-h-screen w-screen flex-none flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
+            <div class='-mt-90 flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
                 {errors.api && <ApiError message={errors.api} />}
                 <main
                     class={`mt-2 w-[22rem] rounded border bg-gray-200 px-12 py-10 shadow-lg dark:border-gray-400 dark:bg-gray-700 md:mt-8`}
@@ -40,62 +40,58 @@ export function Login() {
                         action='https://example/login'
                         class='flex flex-col'
                     >
-                        <div class='flex flex-col '>
-                            <label for='email'>Email</label>
-                            <input
-                                use:validate={validateEmail}
-                                readonly={sending()}
-                                id='email'
-                                type='email'
-                                name='email'
-                                required
-                                pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                                class='mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
-                                placeholder='You@example.com'
-                                onInput={(e) => {
-                                    let target = e.target as HTMLInputElement
-                                    setInputs('email', target.value)
-                                }}
+                        <label for='email'>Email</label>
+                        <input
+                            use:validate={validateEmail}
+                            readonly={sending()}
+                            id='email'
+                            type='email'
+                            name='email'
+                            required
+                            pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+                            class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
+                            placeholder='You@example.com'
+                            onInput={(e) => {
+                                let target = e.target as HTMLInputElement
+                                setInputs('email', target.value)
+                            }}
+                        />
+                        {errors.email && (
+                            <InputError
+                                message={errors.email}
+                                element='email'
                             />
-                            {errors.email && (
-                                <InputError
-                                    message={errors.email}
-                                    element='email'
-                                />
-                            )}
-                        </div>
+                        )}
 
-                        <div class='g flex flex-col'>
-                            <label for='password'>Password</label>
-                            <input
-                                use:validate={validatePassword}
-                                readonly={sending()}
-                                id='password'
-                                name='password'
-                                type={showPwd() ? 'text' : 'password'}
-                                required
-                                minlength={6}
-                                class='mb-6 h-10 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
-                                placeholder='Your password'
-                                onInput={(e) => {
-                                    let target = e.target as HTMLInputElement
-                                    setInputs('password', target.value)
-                                }}
+                        <label for='password'>Password</label>
+                        <input
+                            use:validate={validatePassword}
+                            readonly={sending()}
+                            id='password'
+                            name='password'
+                            type={showPwd() ? 'text' : 'password'}
+                            required
+                            minlength={6}
+                            class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
+                            placeholder='Your password'
+                            onInput={(e) => {
+                                let target = e.target as HTMLInputElement
+                                setInputs('password', target.value)
+                            }}
+                        />
+                        {errors.password && (
+                            <InputError
+                                message={errors.password}
+                                element='password'
                             />
-                            {errors.password && (
-                                <InputError
-                                    message={errors.password}
-                                    element='password'
-                                />
-                            )}
-                        </div>
+                        )}
 
                         <div>
                             <input
                                 disabled={sending()}
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
-                                id='show-password'
+                                name='show-password'
                                 onChange={() => {
                                     setShowPwd(!showPwd())
                                 }}
@@ -108,7 +104,6 @@ export function Login() {
                                 readonly={sending()}
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
-                                id='remember'
                                 name='remember'
                             />
                             <label for='remember'>Remember me</label>
@@ -126,7 +121,7 @@ export function Login() {
                     <div class='mt-2 text-left'>
                         <A
                             href='/reset-password'
-                            class='cursor-pointer text-center text-gray-800 hover:underline dark:text-gray-50'
+                            class='text-center text-gray-800 hover:underline dark:text-gray-50'
                         >
                             Forgot your password?
                         </A>
