@@ -13,7 +13,7 @@ Enter email user@example.com to see success state
 -   [ ] clean up returns in `postForm()`
 -   [x] lazy load welcome and forgot password pages
 -   [ ] type function returns
--   [ ] clean up styles
+-   [x] clean up styles
 -   [x] move reusable components and function to a separate file
 -   [ ] optimize css file size
 -   [x] do not cut off api mistake on mobile

@@ -18,7 +18,7 @@ function ForgotPassword() {
     const [email, setEmail] = createSignal('')
 
     function submit(form: HTMLFormElement) {
-        postForm(form, login)
+    
     }
 
     const [isAuthed, { login, logout }] = useAuth()
@@ -34,10 +34,10 @@ function ForgotPassword() {
                         action='https://example/reset-password'
                         class='flex flex-col'
                     >
-                        <h1 class='mb-1 text-center text-xl'>
+                        <h1 class='mb-2 text-center text-xl'>
                             Forgot your password?
                         </h1>
-                        <div class='mb-2 text-left dark:text-gray-200'>
+                        <div class='mb-4 text-left dark:text-gray-200'>
                             Enter your email to receive reset instructions
                         </div>
                         <label for='email'>Email</label>

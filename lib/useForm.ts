@@ -96,6 +96,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
         for (let [key, value] of data) {
             body[key] = value
         }
+        console.log(ref.action)
         // placeholder logic to showcase behaviour on successful login
         // in deploy with no backend
         if (body.email === 'user@example.com') {
@@ -105,7 +106,6 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 localStorage.setItem('logged', 'true')
             }
             // placeholder to showcase "loading" state
-            // simulates server responce time
             setTimeout(() => {
                 setErrors({ api: undefined })
                 setSending(false)
@@ -113,7 +113,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
             }, 800)
             return
         }
-        // logic with backend
+        // "real" logic
         else {
             fetch(ref.action, {
                 method: 'post',
@@ -131,9 +131,15 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                 .then((res) => {
                     callback && callback()
                     if (data.get('remember') === 'on') {
-                        localStorage.setItem('logged', 'true') // or fill with response data
+                        // placeholder:
+                        localStorage.setItem('logged', 'true') 
+                        // use response data:
+                        // localStorage.setItem(res.name, res.value)
                     } else {
-                        sessionStorage.setItem('logged', 'true') // or fill with response data
+                        // placeholder:
+                        sessionStorage.setItem('logged', 'true')
+                        // use response data:
+                        // localStorage.setItem(res.name, res.value)
                     }
                     setErrors({ api: undefined })
                     setSending(false)

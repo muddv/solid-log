@@ -3,7 +3,6 @@ import { lazy } from 'solid-js'
 
 import { AuthProvider } from './Auth'
 import { Login } from './Login'
-import { Protected } from './Protected'
 const ForgotPassword = lazy(() => import('./ForgotPassword'))
 const Welcome = lazy(() => import('./Weclome'))
 
