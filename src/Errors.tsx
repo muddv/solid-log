@@ -1,5 +1,6 @@
 type Props = {
     message: string
+    isError?: boolean
     element?: string
 }
 
@@ -14,9 +15,14 @@ export function InputError(props: Props) {
     )
 }
 
-export function ApiError(props: Props) {
+export function ApiMessage(props: Props) {
+    if (props.isError === undefined) props.isError = true
     return (
-        <div class='-mt-24 flex h-24 w-96 w-[22rem] items-center justify-center rounded border border-2 border-pink-600 border-opacity-20 bg-gray-200 text-center shadow-lg dark:border-rose-800 dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50'>
+        <div
+            class={`-mt-24 flex h-24 w-96 w-[22rem] items-center justify-center rounded border border-2  border-opacity-20 bg-gray-200 text-center shadow-lg  dark:border-opacity-50 dark:bg-gray-700 dark:text-gray-50 ${
+                props.isError && 'border-pink-600 dark:border-rose-800'
+            } ${!props.isError && 'border-green-900 dark:border-green-500'}`}
+        >
             <span class='mx-8'>{props.message}</span>
         </div>
     )

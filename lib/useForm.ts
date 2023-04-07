@@ -132,7 +132,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                     callback && callback()
                     if (data.get('remember') === 'on') {
                         // placeholder:
-                        localStorage.setItem('logged', 'true') 
+                        localStorage.setItem('logged', 'true')
                         // use response data:
                         // localStorage.setItem(res.name, res.value)
                     } else {

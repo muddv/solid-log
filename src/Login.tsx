@@ -6,7 +6,7 @@ import { Navigate, A } from '@solidjs/router'
 import { useForm } from '../lib/useForm'
 import { validateEmail, validatePassword } from '../lib/validators'
 import { useAuth } from './Auth'
-import { InputError, ApiError } from './Errors'
+import { InputError, ApiMessage } from './Errors'
 
 export function Login() {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
@@ -29,7 +29,7 @@ export function Login() {
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
             <div class='-mt-90 flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
-                {errors.api && <ApiError message={errors.api} />}
+                {errors.api && <ApiMessage message={errors.api} />}
                 <main
                     class={`mt-2 w-[22rem] rounded border bg-gray-200 px-12 py-10 shadow-lg dark:border-gray-400 dark:bg-gray-700 md:mt-8`}
                 >

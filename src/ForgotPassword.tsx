@@ -3,7 +3,7 @@ import { createSignal, Show } from 'solid-js'
 import { useAuth } from './Auth'
 import { validateEmail } from '../lib/validators'
 import { useForm } from '../lib/useForm'
-import { InputError, ApiError } from './Errors'
+import { InputError, ApiMessage } from './Errors'
 import { Navigate } from '@solidjs/router'
 
 function ForgotPassword() {
@@ -17,8 +17,11 @@ function ForgotPassword() {
     })
     const [email, setEmail] = createSignal('')
 
+    // placeholder, in real application we would diplay message from backend
+    // using postForm
+    const [isSent, setIsSent] = createSignal(false)
     function submit(form: HTMLFormElement) {
-    
+        setIsSent(true)
     }
 
     const [isAuthed, { login, logout }] = useAuth()
@@ -26,7 +29,13 @@ function ForgotPassword() {
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
             <div class='flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50'>
-                {errors.api && <ApiError message={errors.api} />}
+                {isSent() && (
+                    <ApiMessage
+                        message='Instructions are sent to your email!'
+                        isError={false}
+                    />
+                )}
+                {errors.api && <ApiMessage message={errors.api} />}
                 <main class='mt-2 w-[22rem] rounded border bg-gray-200 px-12 py-10 shadow-lg dark:border-gray-400 dark:bg-gray-700 md:mt-8'>
                     <form
                         use:formSubmit={submit}
