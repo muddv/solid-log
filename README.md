@@ -1,12 +1,15 @@
 # Solid log
-Login form made with SolidJS\
+
+Login form made with SolidJS
+
+![image](https://user-images.githubusercontent.com/73133951/230943843-95a9d03b-b98c-4bcd-84bb-3b85ec99717c.png) 
+![image](https://user-images.githubusercontent.com/73133951/230943914-f78fa59f-194f-4ecf-8cb2-e48f83746451.png)
+
 **[See it live](https://solid-log.vercel.app)**
-![image](https://user-images.githubusercontent.com/73133951/230943843-95a9d03b-b98c-4bcd-84bb-3b85ec99717c.png) ![image](https://user-images.githubusercontent.com/73133951/230943914-f78fa59f-194f-4ecf-8cb2-e48f83746451.png)
-
-
-**To launch development build locally**: run `pnpm i` and then `pnpm dev`
 
 **Note: most inputs would produce error, use email `user@example.com` and any password longer than 5 characters to see success state.**
+
+**To launch development build locally**: run `pnpm i` and then `pnpm dev`
 
 ## Features: 
 - Light/dark mode
@@ -23,6 +26,8 @@ Login form made with SolidJS\
 - Vite
 
 ## TODO
+-   [ ] add text indicating link is not actually sent to email in
+    "ForgotPassword"
 -   [ ] clean up `postForm()` vs `formSubmit()`
 -   [ ] clean up returns in `postForm()`
 -   [x] lazy load welcome and forgot password pages
