@@ -1,6 +1,8 @@
 # Solid log
 Login form made with SolidJS\
 **[See it live](https://solid-log.vercel.app)**
+![image](https://user-images.githubusercontent.com/73133951/230943843-95a9d03b-b98c-4bcd-84bb-3b85ec99717c.png) ![image](https://user-images.githubusercontent.com/73133951/230943914-f78fa59f-194f-4ecf-8cb2-e48f83746451.png)
+
 
 **To launch development build locally**: run `pnpm i` and then `pnpm dev`
 
