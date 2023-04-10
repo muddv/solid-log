@@ -1,15 +1,26 @@
-## Solid log
+# Solid log
+Login form made with SolidJS\
+**[See it live](https://solid-log.vercel.app)**
 
-Login form made with solid.js and other things
+**To launch development build locally**: run `pnpm i` and then `pnpm dev`
 
-tailwind
-prettier + tailwind plugin
-eslint + typescript rules
+**Note: most inputs would produce error, use email `user@example.com` and any password longer than 5 characters to see success state.**
 
-Enter email user@example.com to see success state
+## Features: 
+- Light/dark mode
+- Native HTML validation
+- Feedback for different types of errors, and different form states
+- Placeholders for different pages, restricted access depending on whether user is logged in or not
+- Small bundle size, perfect lighthouse scores (which is easy for a small app made with Solid)
+
+## Made with
+- `solidjs` and `solid-router`
+- Styles with `tailwind` using `postcss`
+- `eslint` with reccomended and typescript reccomended configs,
+  `prettier` with tailwind plugin, typescript
+- Vite
 
 ## TODO
-
 -   [ ] clean up `postForm()` vs `formSubmit()`
 -   [ ] clean up returns in `postForm()`
 -   [x] lazy load welcome and forgot password pages
