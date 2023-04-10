@@ -1,5 +1,4 @@
 import { createSignal, JSXElement } from 'solid-js'
-import { createStore } from 'solid-js/store'
 import { Show } from 'solid-js'
 import { Navigate, A } from '@solidjs/router'
 
@@ -16,14 +15,13 @@ export function Login(): JSXElement {
             'invalid:dark:bg-opacity-50'
         ]
     })
-    const [inputs, setInputs] = createStore({ email: '', password: '' })
     const [showPwd, setShowPwd] = createSignal(false)
 
     function submit(form: HTMLFormElement): void {
         postForm(form, login)
     }
 
-    const [isAuthed, { login, logout }] = useAuth()
+    const [isAuthed, { login }] = useAuth()
 
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
@@ -50,10 +48,7 @@ export function Login(): JSXElement {
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                             class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
-                            onInput={(e): void => {
-                                const target = e.target as HTMLInputElement
-                                setInputs('email', target.value)
-                            }}
+
                         />
                         {errors.email && (
                             <InputError
@@ -73,10 +68,6 @@ export function Login(): JSXElement {
                             minlength={6}
                             class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='Your password'
-                            onInput={(e): void => {
-                                const target = e.target as HTMLInputElement
-                                setInputs('password', target.value)
-                            }}
                         />
                         {errors.password && (
                             <InputError

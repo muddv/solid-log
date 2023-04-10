@@ -10,6 +10,7 @@ Enter email user@example.com to see success state
 
 ## TODO
 
+-   [ ] clean up `postForm()` vs `formSubmit()`
 -   [ ] clean up returns in `postForm()`
 -   [x] lazy load welcome and forgot password pages
 -   [ ] type function returns
