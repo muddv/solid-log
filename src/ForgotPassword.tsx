@@ -53,6 +53,7 @@ function ForgotPassword(): JSXElement {
                             readonly={sending()}
                             type='email'
                             name='email'
+                            id='email'
                             required
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                             class='mb-6 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'

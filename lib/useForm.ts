@@ -3,7 +3,6 @@ import { Accessor, createSignal } from 'solid-js'
 
 type LogInInput = {
     element: HTMLInputElement
-    validity?: string
 }
 
 type Inputs = {
@@ -45,7 +44,7 @@ function checkValid(
     }
 }
 
-//TODO clean this up
+//TODO clean up returns
 export function useForm({ errorClass }: { errorClass: string[] }): {
     validate: (ref: HTMLInputElement) => void
     formSubmit: (
@@ -101,7 +100,6 @@ export function useForm({ errorClass }: { errorClass: string[] }): {
         for (const [key, value] of data) {
             body[key] = value
         }
-        console.log(ref.action)
         // placeholder logic to showcase behaviour on successful login
         // in deploy with no backend
         if (body.email === 'user@example.com') {

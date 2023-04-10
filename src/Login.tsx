@@ -82,6 +82,7 @@ export function Login(): JSXElement {
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 name='show-password'
+                                id='show-password'
                                 onChange={(): void => {
                                     setShowPwd(!showPwd())
                                 }}
@@ -95,6 +96,7 @@ export function Login(): JSXElement {
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 name='remember'
+                                id='remember'
                             />
                             <label for='remember'>Remember me</label>
                         </div>
