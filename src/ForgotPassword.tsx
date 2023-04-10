@@ -1,12 +1,11 @@
-import { createSignal, Show } from 'solid-js'
+import { createSignal, JSXElement, Show } from 'solid-js'
 
 import { useAuth } from './Auth'
-import { validateEmail } from '../lib/validators'
 import { useForm } from '../lib/useForm'
 import { InputError, ApiMessage } from './Errors'
 import { Navigate } from '@solidjs/router'
 
-function ForgotPassword() {
+function ForgotPassword(): JSXElement {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
         errorClass: [
             'invalid:bg-pink-500',
@@ -20,11 +19,11 @@ function ForgotPassword() {
     // placeholder, in real application we would diplay message from backend
     // using postForm
     const [isSent, setIsSent] = createSignal(false)
-    function submit(form: HTMLFormElement) {
+    function submit(): void {
         setIsSent(true)
     }
 
-    const [isAuthed, { login, logout }] = useAuth()
+    const [isAuthed] = useAuth()
 
     return (
         <Show when={!isAuthed()} fallback={<Navigate href='/' />}>
@@ -51,7 +50,7 @@ function ForgotPassword() {
                         </div>
                         <label for='email'>Email</label>
                         <input
-                            use:validate={validateEmail}
+                            use:validate
                             readonly={sending()}
                             type='email'
                             name='email'
@@ -59,8 +58,8 @@ function ForgotPassword() {
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                             class='mb-6 w-full rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
-                            onInput={(e) => {
-                                let target = e.target as HTMLInputElement
+                            onInput={(e): void => {
+                                const target = e.target as HTMLInputElement
                                 setEmail(target.value)
                             }}
                         />

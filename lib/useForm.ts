@@ -1,9 +1,9 @@
 import { createStore, SetStoreFunction } from 'solid-js/store'
-import { createSignal } from 'solid-js'
+import { Accessor, createSignal } from 'solid-js'
 
 type LogInInput = {
     element: HTMLInputElement
-    validator: Function
+    validity?: string
 }
 
 type Inputs = {
@@ -15,18 +15,18 @@ type Errors = {
 }
 
 function checkValid(
-    { element, validator }: LogInInput,
+    { element }: LogInInput,
     setErrors: SetStoreFunction<Errors>,
     errorClass: string[]
 ) {
-    return async () => {
+    return async (): Promise<void> => {
         element.setCustomValidity('')
         element.checkValidity()
 
         let message
 
         if (element.validity.valueMissing) {
-            let elName = element.name[0].toUpperCase() + element.name.slice(1)
+            const elName = element.name[0].toUpperCase() + element.name.slice(1)
             message = `${elName} is required!`
         } else if (
             element.validity.typeMismatch ||
@@ -38,13 +38,6 @@ function checkValid(
         } else {
             message = element.validationMessage
         }
-        if (!message) {
-            const text = await validator(element)
-            if (text) {
-                element.setCustomValidity(text)
-            }
-            message = element.validationMessage
-        }
         if (message) {
             errorClass.forEach((c) => element.classList.toggle(c, true))
             setErrors({ [element.name]: message })
@@ -52,32 +45,44 @@ function checkValid(
     }
 }
 
-export function useForm({ errorClass }: { errorClass: string[] }) {
+//TODO clean this up
+export function useForm({ errorClass }: { errorClass: string[] }): {
+    validate: (ref: HTMLInputElement) => void
+    formSubmit: (
+        ref: HTMLFormElement,
+        accessor?: (() => (ref: HTMLFormElement) => void) | undefined
+    ) => void
+    errors: Errors
+    postForm: (
+        ref: HTMLFormElement,
+        callback?: (() => void) | undefined
+    ) => void
+    sending: Accessor<boolean>
+} {
     const [errors, setErrors] = createStore<Errors>({}),
         [sending, setSending] = createSignal(false),
         fields: Inputs = {}
 
-    const validate = (ref: HTMLInputElement, accessor?: Function) => {
-        let validator: Function = () => {}
-        accessor && (validator = accessor())
+    const validate = (ref: HTMLInputElement): void => {
         let config: LogInInput
-        fields[ref.name] = config = { element: ref, validator }
+        fields[ref.name] = config = { element: ref }
         ref.onblur = checkValid(config, setErrors, errorClass)
-        ref.oninput = () => {
+        ref.oninput = (): void => {
             if (!errors[ref.name]) return
             setErrors({ [ref.name]: undefined })
             errorClass.forEach((c) => ref.classList.toggle(c, false))
         }
     }
 
-    const formSubmit = (ref: HTMLFormElement, accessor?: Function) => {
-        let callback = (ref: HTMLFormElement) => {}
-        accessor && (callback = accessor())
+    const formSubmit = (
+        ref: HTMLFormElement,
+        accessor?: () => { (ref: HTMLFormElement): void }
+    ): void => {
         ref.setAttribute('novalidate', '')
-        ref.onsubmit = async (e) => {
+        ref.onsubmit = async (e): Promise<void> => {
             e.preventDefault()
             let errored = false
-            for (let i in fields) {
+            for (const i in fields) {
                 const field = fields[i]
                 await checkValid(field, setErrors, errorClass)()
                 if (!errored && field.element.validationMessage) {
@@ -85,15 +90,15 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                     errored = true
                 }
             }
-            !errored && callback(ref)
+            !errored && accessor && accessor()(ref)
         }
     }
 
-    const postForm = (ref: HTMLFormElement, callback?: Function) => {
+    const postForm = (ref: HTMLFormElement, callback?: () => void): void => {
         setSending(true)
-        let data = new FormData(ref)
-        let body: { [key: string]: FormDataEntryValue } = {}
-        for (let [key, value] of data) {
+        const data = new FormData(ref)
+        const body: { [key: string]: FormDataEntryValue } = {}
+        for (const [key, value] of data) {
             body[key] = value
         }
         console.log(ref.action)
@@ -128,7 +133,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                     setSending(false)
                     return response.json()
                 })
-                .then((res) => {
+                .then(() => {
                     callback && callback()
                     if (data.get('remember') === 'on') {
                         // placeholder:
@@ -150,7 +155,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                         error
                             .json()
                             .then(() => {
-                                let message =
+                                const message =
                                     'User not found, check your credentials and retry.'
                                 setSending(false)
                                 setErrors({ api: message })
@@ -162,7 +167,7 @@ export function useForm({ errorClass }: { errorClass: string[] }) {
                                 return errors
                             })
                     } else {
-                        let message =
+                        const message =
                             'Network error, make sure you are connected and try again.'
                         setSending(false)
                         setErrors({ api: message })

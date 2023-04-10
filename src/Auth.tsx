@@ -15,17 +15,17 @@ type Props = {
     children?: JSXElement
 }
 
-export function AuthProvider(props: Props) {
+export function AuthProvider(props: Props): JSXElement {
     const [isAuthed, setIsAuthed] = createSignal<boolean>(
             props.isAuthed || false
         ),
         auth: Auth = [
             isAuthed,
             {
-                login() {
+                login(): void {
                     setIsAuthed(true)
                 },
-                logout() {
+                logout(): void {
                     sessionStorage.removeItem('logged')
                     localStorage.removeItem('logged')
                     setIsAuthed(false)
@@ -39,6 +39,6 @@ export function AuthProvider(props: Props) {
     )
 }
 
-export function useAuth() {
+export function useAuth(): Auth {
     return useContext(AuthContext)!
 }

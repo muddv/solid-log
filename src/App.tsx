@@ -1,12 +1,12 @@
 import { Route, Router, Routes } from '@solidjs/router'
-import { lazy } from 'solid-js'
+import { JSXElement, lazy } from 'solid-js'
 
 import { AuthProvider } from './Auth'
 import { Login } from './Login'
 const ForgotPassword = lazy(() => import('./ForgotPassword'))
 const Welcome = lazy(() => import('./Weclome'))
 
-export function App() {
+export function App(): JSXElement {
     return (
         <Router>
             <AuthProvider

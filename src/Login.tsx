@@ -1,14 +1,13 @@
-import { createSignal } from 'solid-js'
+import { createSignal, JSXElement } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { Show } from 'solid-js'
 import { Navigate, A } from '@solidjs/router'
 
 import { useForm } from '../lib/useForm'
-import { validateEmail, validatePassword } from '../lib/validators'
 import { useAuth } from './Auth'
 import { InputError, ApiMessage } from './Errors'
 
-export function Login() {
+export function Login(): JSXElement {
     const { validate, formSubmit, errors, postForm, sending } = useForm({
         errorClass: [
             'invalid:bg-pink-500',
@@ -20,7 +19,7 @@ export function Login() {
     const [inputs, setInputs] = createStore({ email: '', password: '' })
     const [showPwd, setShowPwd] = createSignal(false)
 
-    function submit(form: HTMLFormElement) {
+    function submit(form: HTMLFormElement): void {
         postForm(form, login)
     }
 
@@ -42,7 +41,7 @@ export function Login() {
                     >
                         <label for='email'>Email</label>
                         <input
-                            use:validate={validateEmail}
+                            use:validate
                             readonly={sending()}
                             id='email'
                             type='email'
@@ -51,8 +50,8 @@ export function Login() {
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                             class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
-                            onInput={(e) => {
-                                let target = e.target as HTMLInputElement
+                            onInput={(e): void => {
+                                const target = e.target as HTMLInputElement
                                 setInputs('email', target.value)
                             }}
                         />
@@ -65,7 +64,7 @@ export function Login() {
 
                         <label for='password'>Password</label>
                         <input
-                            use:validate={validatePassword}
+                            use:validate
                             readonly={sending()}
                             id='password'
                             name='password'
@@ -74,8 +73,8 @@ export function Login() {
                             minlength={6}
                             class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='Your password'
-                            onInput={(e) => {
-                                let target = e.target as HTMLInputElement
+                            onInput={(e): void => {
+                                const target = e.target as HTMLInputElement
                                 setInputs('password', target.value)
                             }}
                         />
@@ -92,7 +91,7 @@ export function Login() {
                                 class='mb-4 mr-2 accent-gray-600'
                                 type='checkbox'
                                 name='show-password'
-                                onChange={() => {
+                                onChange={(): void => {
                                     setShowPwd(!showPwd())
                                 }}
                             />
