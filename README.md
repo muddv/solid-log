@@ -11,16 +11,18 @@ Login form made with SolidJS
 
 **To launch development build locally**: run `pnpm i` and then `pnpm dev`
 
-## Features: 
-- Light/dark mode
-- Native HTML validation
-- Feedback for different types of errors, and different form states
-- Placeholders for different pages, restricted access depending on whether user is logged in or not
-- Small bundle size, perfect lighthouse scores (which is easy for a small app made with Solid)
+## Features:
+
+-   Light/dark mode
+-   Native HTML validation
+-   Feedback for different types of errors, and different form states
+-   Placeholders for different pages, restricted access depending on whether user is logged in or not
+-   Small bundle size, perfect lighthouse scores (which is easy for a small app made with Solid)
 
 ## Made with
-- `solidjs` and `solid-router`
-- Styles with `tailwind` using `postcss`
-- `eslint` with reccomended and typescript reccomended configs,
-  `prettier` with tailwind plugin, typescript
-- Vite
+
+-   `solidjs` and `solid-router`
+-   Styles with `tailwind` using `postcss`
+-   `eslint` with reccomended and typescript reccomended configs,
+    `prettier` with tailwind plugin, typescript
+-   Vite

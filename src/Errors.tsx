@@ -1,4 +1,4 @@
-import { JSXElement } from "solid-js"
+import { JSXElement } from 'solid-js'
 
 type Props = {
     message: string

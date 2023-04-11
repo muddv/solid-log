@@ -20,6 +20,9 @@ function checkValid(
 ) {
     return async (): Promise<void> => {
         element.setCustomValidity('')
+        if (element.name === 'email') {
+            element.value = element.value.trim()
+        }
         element.checkValidity()
 
         let message

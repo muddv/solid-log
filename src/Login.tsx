@@ -48,7 +48,6 @@ export function Login(): JSXElement {
                             pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                             class='mb-6 h-10 rounded p-2 transition-colors read-only:bg-slate-400 hover:shadow-md focus:shadow-md focus:outline-none dark:bg-gray-900 dark:read-only:bg-gray-800'
                             placeholder='You@example.com'
-
                         />
                         {errors.email && (
                             <InputError
