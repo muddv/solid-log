@@ -2,8 +2,8 @@
 
 Login form made with SolidJS\
 
-![image](https://user-images.githubusercontent.com/73133951/231157436-c8c52ec9-001a-4db4-a26e-30bcedf554eb.png)
-![image](https://user-images.githubusercontent.com/73133951/231157509-702ddcb5-3bff-48e3-af6e-5e8981bec905.png)
+![image](https://user-images.githubusercontent.com/73133951/231157685-612c793b-fbed-4749-8bbe-2f26a8af86ee.png)
+![image](https://user-images.githubusercontent.com/73133951/231157623-71812afc-cdad-4a3c-89c9-6a9212f1d15b.png)
 
 **[See it live](https://solid-log.vercel.app)**
 
