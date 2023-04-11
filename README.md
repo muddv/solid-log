@@ -1,6 +1,6 @@
 # Solid log
 
-Login form made with SolidJS\
+Login form made with SolidJS
 
 ![image](https://user-images.githubusercontent.com/73133951/231157685-612c793b-fbed-4749-8bbe-2f26a8af86ee.png)
 ![image](https://user-images.githubusercontent.com/73133951/231157623-71812afc-cdad-4a3c-89c9-6a9212f1d15b.png)
