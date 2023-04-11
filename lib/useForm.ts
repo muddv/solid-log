@@ -166,7 +166,7 @@ export function useForm({ errorClass }: { errorClass: string[] }): {
                             })
                     } else {
                         const message =
-                            'Network error, make sure you are connected and try again.'
+                            'We ran into a problem, check your connection or try again later.'
                         setSending(false)
                         setErrors({ api: message })
                         return errors
